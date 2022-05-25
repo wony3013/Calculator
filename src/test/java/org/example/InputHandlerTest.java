@@ -1,23 +1,31 @@
 package org.example;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class InputHandlerTest {
 
     InputHandler ih = new InputHandler();
 
+    String formula = "2 * 4 * 2";
+
     @Test
     public void splitTextTest() {
-        String result = "14 * 6";
-        assertEquals(ih.splitText(result), new String[]{"14", "*", "6"});
+        Assert.assertEquals(ih.splitText(formula), new String[]{"2", "*", "4", "*", "2"});
     }
 
     @Test
-    public void stackSizeCheckTest(){
-        String[] result = {"14", "*", "6", "+", "1"};
-        assertEquals(ih.setStack(result).size(), 5);
+    public void onestepText(){
+        String[] splitedText = ih.splitText(formula);
+        String[] result = ih.apply(splitedText);
+        Assert.assertArrayEquals(result, new String[]{"8", "*", "2"});
+    }
+
+    @Test
+    public void calculatorTest(){
+        String[] splitedText = ih.splitText(formula);
+        int result = ih.calculation(splitedText);
+        Assert.assertEquals(result, 16);
     }
 
 
