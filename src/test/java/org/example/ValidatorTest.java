@@ -1,48 +1,39 @@
 package org.example;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.*;
 
 public class ValidatorTest {
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    Validator validator = new Validator();
 
-    @Test
+    String formula = "2 * 4 * 2";
+
+    @Test(expected = IllegalArgumentException.class)
     public void isEmptyCheckTest() {
-        expectedException.expect(IllegalArgumentException.class);
-        Validator validator = new Validator();
         validator.isEmptyCheck(" ");
     }
 
-    @Test
+    @Test()
     public void isNotEmptyCheckTest() {
-        expectedException.expect(IllegalArgumentException.class);
-        Validator validator = new Validator();
-        validator.isEmptyCheck("16");
+        validator.isEmptyCheck(formula);
+    }
+
+    @Test()
+    public void expressionCheckTest() {
+        validator.expressionCheck(formula);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void wrongExpressionCheckTest() {
+        validator.expressionCheck("4 ^ 6");
     }
 
     @Test
-    public void signCheckArithmeticTest() {
-        expectedException.expect(IllegalArgumentException.class);
-        Validator validator = new Validator();
-        validator.signCheck("*");
+    public void validatorTest(){
+        validator.isEmptyCheck(formula);
+        validator.expressionCheck(formula);
     }
 
-    @Test
-    public void signCheckNumberTest() {
-        expectedException.expect(IllegalArgumentException.class);
-        Validator validator = new Validator();
-        validator.signCheck("1");
-    }
 
-    @Test
-    public void signCheckWrongTest() {
-        expectedException.expect(IllegalArgumentException.class);
-        Validator validator = new Validator();
-        validator.signCheck("^");
-    }
+
 }
