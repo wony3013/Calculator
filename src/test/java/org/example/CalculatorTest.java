@@ -1,18 +1,12 @@
 package org.example;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
 public class CalculatorTest {
 
     Calculator cal = new Calculator();
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
 
     @Test
     public void plusTest(){
@@ -34,10 +28,14 @@ public class CalculatorTest {
         assertEquals(cal.calculator("/", 6, 2), 3);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
+    public void divisionZeroTest(){
+        cal.calculator("/",2,0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void wrongSignTest(){
-        expectedException.expect(IllegalArgumentException.class);
-        assertEquals(cal.calculator("$", 6, 2), 3);
+        cal.calculator("$", 6, 2);
     }
 
 
